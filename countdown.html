@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>Countdown - version 0.9.0</title>
+<title>Countdown - version 0.9.1</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
-var rdv = 'June 05, 2021 17:00:00'
+var rdv = Date.now() + 5000;
 var countdown = 15 * 60;
 
 $(document).ready(function() {
@@ -28,13 +28,14 @@ $(document).ready(function() {
   var doUpdate = function() {
     rdvDate = new Date(rdv)
     var restant =  Math.floor((rdvDate - Date.now()) / 1000) + 1;
-	var diff = restant - countdown;
-    if (diff > 0) {
+    if (restant > countdown) {
       $('#countdown').html(rdv);
     } else {
       $('#countdown').html(toHHMMSS(Math.abs(restant)));
-	  if (diff == 0) {
-	    $(document).css("filter", "invert(100%)");
+	  if (restant == 0) {
+	    $('body').css("background", "white");
+	  } else {
+	    $('body').css("background", "black");
 	  }
     }
   };
@@ -49,7 +50,7 @@ $(document).click(function() {
   }
 });
 </script>
-</head>filter: invert(0%);
+</head>
 <body style="background: black">
 <div style="text-align:center; font-size: 6em; font-family: monospace; color: orange;" id="countdown">Ready</div>
 </body>
