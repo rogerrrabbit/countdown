@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>Countdown - version 0.9.0</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+var rdv = 'June 05, 2021 17:00:00'
+var countdown = 15 * 60;
+
+$(document).ready(function() {
+
+  var toHHMMSS = function(sec_num) {
+    var hours = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours < 10) {
+      hours = "0" + hours;
+    }
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+    return hours + ':' + minutes + ':' + seconds;
+  }
+
+  var doUpdate = function() {
+    rdvDate = new Date(rdv)
+    var restant =  Math.floor((rdvDate - Date.now()) / 1000) + 1;
+	var diff = restant - countdown;
+    if (diff > 0) {
+      $('#countdown').html(rdv);
+    } else {
+      $('#countdown').html(toHHMMSS(Math.abs(restant)));
+	  if (diff == 0) {
+	    $(document).css("filter", "invert(100%)");
+	  }
+    }
+  };
+
+  setInterval(doUpdate, 250);
+});
+
+$(document).click(function() {
+  input = window.prompt("Entrez une nouvelle date", rdv);
+  if (input != null) {
+	rdv = input;
+  }
+});
+</script>
+</head>filter: invert(0%);
+<body style="background: black">
+<div style="text-align:center; font-size: 6em; font-family: monospace; color: orange;" id="countdown">Ready</div>
+</body>
+</html>
